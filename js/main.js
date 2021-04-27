@@ -1,15 +1,26 @@
 const getClass = what => document.querySelector(what)
+let dataAtual = new Date();
+let dia = dataAtual.getDate();
+let mes = (dataAtual.getMonth() + 1);
+let ano = dataAtual.getFullYear();
+let horas = dataAtual.getHours();
+let minutos = dataAtual.getMinutes();
 
 let tarefas = [{
   name: 'Exemplo de tarefa',
-  id: Math.floor(Math.random() * 9999)
+  id: Math.floor(Math.random() * 9999),
+  create: `
+    Criado dia ${dia}/${mes}/${ano}, as ${horas}:${minutos}h
+  `
 }]
 
 const render = () => {
   getClass(`.lista`)
     .innerHTML = tarefas.map(e => `
       <div class="item">
+        <p>${e.create}</p>
         <h2>${e.name}</h2>
+        
         <button onClick="del(${e.id})">Excluir</button>
       </div>
     `)
@@ -28,7 +39,10 @@ getClass(`.form`)
     
     tarefas = [...tarefas, {
       name: getClass(`.input`).value,
-      id: Math.floor(Math.random() * 9999)
+      id: Math.floor(Math.random() * 9999),
+      create: `
+          Criado dia ${dia}/${mes}/${ano}, as ${horas}:${minutos}h
+        `
     }]
     
     saveDb()
